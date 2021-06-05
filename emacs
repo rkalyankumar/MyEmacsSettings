@@ -58,34 +58,6 @@
 (evil-mode 1)
 (load-theme 'material t)
 
-;; make the fringe stand out from the background
-(setq solarized-distinct-fringe-background t)
-
-;; Don't change the font for some headings and titles
-(setq solarized-use-variable-pitch nil)
-
-;; make the modeline high contrast
-(setq solarized-high-contrast-mode-line t)
-
-;; Use less bolding
-(setq solarized-use-less-bold t)
-
-;; Use more italics
-(setq solarized-use-more-italic t)
-
-;; Use less colors for indicators such as git:gutter, flycheck and similar
-(setq solarized-emphasize-indicators nil)
-
-;; Don't change size of org-mode headlines (but keep other size-changes)
-(setq solarized-scale-org-headlines nil)
-
-;; Avoid all font-size changes
-(setq solarized-height-minus-1 1.0)
-(setq solarized-height-plus-1 1.0)
-(setq solarized-height-plus-2 1.0)
-(setq solarized-height-plus-3 1.0)
-(setq solarized-height-plus-4 1.0)
-
 (setq x-underline-at-descent-line t)
 
 (setq-default indent-tabs-mode nil)
@@ -221,7 +193,7 @@
 (setq dabbrev-upcase-means-case-search t)
 
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#e3d8c5")
+(set-face-background 'hl-line "midnight blue")
 
 (setq compilation-directory-locked nil)
 (scroll-bar-mode -1)
@@ -260,3 +232,5 @@
 
 
 (setq make-backup-files nil)
+
+(add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
