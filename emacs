@@ -15,12 +15,11 @@
 
 (defvar myPackages
   '(better-defaults                 ;; Set up some better Emacs defaults
-	elpy							;; Emacs lisp python environment
-	flycheck                        ;; On the fly syntax checking
+	auto-complete					;; Autocomplete package
+	epc
+	jedi
     material-theme                  ;; Theme
 	py-autopep8                     ;; Run autopep8 on save
-    blacken                         ;; Black formatting on save
-	ein                             ;; Emacs IPython Notebook
 	magit                           ;; Git integration
 	neotree							;; file/directory viewer
 	doom-modeline					;; doom modeline
@@ -46,7 +45,7 @@
  '(custom-safe-themes
    '("171d1ae90e46978eb9c342be6658d937a83aaa45997b1d7af7657546cae5985b" default))
  '(package-selected-packages
-   '(all-the-icons-dired all-the-icons py-autopep8 solarized-theme evil)))
+   '(auto-complete-c-headers all-the-icons-dired all-the-icons py-autopep8 solarized-theme evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -83,32 +82,6 @@
 
 (setq inhibit-startup-screen t)
 (global-linum-mode t)
-
-
-(elpy-enable)
-
-;; Enable Flycheck
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-
-;; Enable autopep8
-(require 'py-autopep8)
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-
-
-;; Use IPython for REPL
-(setq python-shell-interpreter "jupyter"
-      python-shell-interpreter-args "console --simple-prompt"
-      python-shell-prompt-detect-failure-warning nil)
-(add-to-list 'python-shell-completion-native-disabled-interpreters
-             "jupyter")
-
-;; Enable Flycheck
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 
 ;;(neotree-show)
@@ -234,3 +207,65 @@
 (setq make-backup-files nil)
 
 (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
+
+(setq-default buffer-file-coding-system 'utf-8-unix)
+
+(set-terminal-coding-system 'utf-8)
+(set-language-environment 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+
+(defun run-bash ()
+      (interactive)
+      (let ((shell-file-name "C:\\Program Files\\Git\\bin\\bash.exe"))
+            (shell "*bash*")))
+			
+(defun run-powershell ()
+  "Run powershell"
+  (interactive)
+  (async-shell-command "c:/windows/system32/WindowsPowerShell/v1.0/powershell.exe -Command -"
+               nil
+               nil))
+
+
+(setenv  "PATH" (concat
+
+                ;; "c:/Windows/System32" ";" 
+
+                 "c:/Windows/Microsoft.NET/Framework/v4.0.30319" ";"
+
+                 "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319" ";"
+
+                 ;; Unix tools 
+                 "C:\\Program Files\\Git\\usr\\bin" ";"
+
+                 ;; User binary files 
+                 "C:\\User\\arch\\bin" ";"
+
+                 ;; Mono Installation.
+                 "c:\\Program Files\\Mono\\bin" ";"
+
+                 "c:\\Program Files\\Mono\\lib\\mono\\4.5" ";"
+
+                 (getenv "PATH")
+
+         ))
+		 
+
+(ac-config-default)
+(add-hook 'python-mode-hook 'jedi:setup)
+(add-hook 'python-mode-hook 'jedi:ac-setup)
+(setq jedi:complete-on-dot t)  
+(setq jedi:setup-keys t)
+
+
+(defun pyc ()
+  "Use compile to run python programs"
+  (interactive)
+  (compile (concat "python " (buffer-name))))
+(setq compilation-scroll-output t)
+
+(global-set-key "\M-m" 'pyc)
