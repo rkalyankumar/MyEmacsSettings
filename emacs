@@ -77,6 +77,7 @@
 (add-hook 'window-setup-hook 'toggle-frame-maximized t)
 
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 
 (split-window-horizontally)
 
@@ -269,3 +270,4 @@
 (setq compilation-scroll-output t)
 
 (global-set-key "\M-m" 'pyc)
+(global-set-key [f8] 'neotree-toggle)
