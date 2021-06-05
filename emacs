@@ -269,5 +269,10 @@
   (compile (concat "python " (buffer-name))))
 (setq compilation-scroll-output t)
 
-(global-set-key "\M-m" 'pyc)
+;; Add commands to python mode
+(add-hook 'python-mode-hook (lambda ()
+ (local-set-key "\M-m" 'pyc)))
+
+;; (global-set-key "\M-m" 'pyc)
 (global-set-key [f8] 'neotree-toggle)
+(global-auto-complete-mode t)
