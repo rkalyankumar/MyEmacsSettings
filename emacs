@@ -16,6 +16,8 @@
 (defvar myPackages
   '(better-defaults                 ;; Set up some better Emacs defaults
 	auto-complete					;; Autocomplete package
+	company
+	company-jedi
 	epc
 	jedi
     material-theme                  ;; Theme
@@ -55,7 +57,7 @@
  '(scroll-bar ((t (:background "midnight blue" :foreground "navy")))))
 (require 'evil)
 (evil-mode 1)
-(load-theme 'material t)
+(load-theme 'atom-one-dark t)
 
 (setq x-underline-at-descent-line t)
 
@@ -276,3 +278,26 @@
 ;; (global-set-key "\M-m" 'pyc)
 (global-set-key [f8] 'neotree-toggle)
 (global-auto-complete-mode t)
+(add-hook 'after-init-hook 'global-company-mode)
+
+(defun fix-c-indent-offset-according-to-syntax-context (key val)
+  ;; remove the old element
+  (setq c-offsets-alist (delq (assoc key c-offsets-alist) c-offsets-alist))
+  ;; new value
+  (add-to-list 'c-offsets-alist (cons key val)))
+
+(defun my-c-mode-common-hook ()
+ ;; my customizations for all of c-mode, c++-mode, objc-mode, java-mode
+ (c-set-offset 'substatement-open 0)
+ ;; other customizations can go here
+
+ (setq c++-tab-always-indent t)
+ (setq c-basic-offset 4)                  ;; Default is 2
+ (setq c-indent-level 4)                  ;; Default is 2
+
+ (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60))
+ (setq tab-width 4)
+ (setq indent-tabs-mode nil)  ; use spaces only if nil
+ )
+
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
