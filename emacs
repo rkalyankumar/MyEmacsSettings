@@ -16,6 +16,7 @@
 (defvar myPackages
   '(better-defaults                 ;; Set up some better Emacs defaults
 	auto-complete					;; Autocomplete package
+	evil
 	company
 	company-jedi
 	epc
@@ -27,6 +28,9 @@
 	doom-modeline					;; doom modeline
 	projectile						;; projectile
 	atom-one-dark-theme				;; Atom one dark theme
+	org-roam
+	lsp-mode
+	lsp-java
     )
   )
   
@@ -47,7 +51,7 @@
  '(custom-safe-themes
    '("171d1ae90e46978eb9c342be6658d937a83aaa45997b1d7af7657546cae5985b" default))
  '(package-selected-packages
-   '(auto-complete-c-headers all-the-icons-dired all-the-icons py-autopep8 solarized-theme evil)))
+   '(org-roam auto-complete-c-headers all-the-icons-dired all-the-icons py-autopep8 solarized-theme evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -301,3 +305,5 @@
  )
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+(add-hook 'java-mode-hook #'lsp)
